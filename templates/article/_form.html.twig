@@ -3,7 +3,7 @@
         {{ form_errors(form) }}
     </div>
 
-    <div class="col ml-2">
+    <div class="row ml-2">
         <div class="col mb-2">
                 <h4>{{ form_label(form.title) }}</h4>
                 <div>{{ form_widget(form.title) }}</div>
@@ -21,9 +21,15 @@
                 <div>{{ form_widget(form.picture) }}</div>
         </div>
         <div class="col mb-2">
-                <h4>{{ form_label(form.categories) }}</h4>
-                <div>{{ form_widget(form.categories) }}</div>
-        </div>
+        <h4>{{ form_label(form.categories) }}</h4>
+<ul>
+{% for catField in form.categories %}
+    <li>
+        {{ form_errors(catField) }}
+        {{ form_widget(catField) }}
+    </li>
+{% endfor %}
+</ul></div>
         <div class="col mb-2">
                 <h4>{{ form_label(form.date) }}</h4>
                 <div>{{ form_widget(form.date) }}</div>
