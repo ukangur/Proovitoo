@@ -18,14 +18,14 @@ use App\Form\NewArticleType;
 
 class NewsController extends Controller{
     /**
-     * @Route("/")
+     * @Route("/", name="home")
      * @Method({{"GET"}})
      */
     
     public function index(){
         //return new Response('<html><body>Hello</body></html>');
     
-        $articles = $this->getDoctrine()->getRepository(Article::class)->findAll();
+        $articles = $this->getDoctrine()->getRepository(Article::class)->findby([],['date' => 'DESC']);
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
 
 
@@ -33,7 +33,7 @@ class NewsController extends Controller{
     }
 
      /**
-      * @Route("/article/new")
+      * @Route("/article/new", name="newarticle")
       */
      public function new(Request $request) {
 
@@ -43,55 +43,31 @@ class NewsController extends Controller{
      
 
         return $this->render('newsarticles/new.html.twig', array(
-            'forma' => $form->createView()));
+            'formart' => $form->createView()));
      }
-
-/*
-
-     public function save() {
-         
-         $entityManager = $this->getDoctrine()->getManager();
-
-         $category = new Category();
-         $category->setTitle('category4');
-         
-
-         $entityManager->persist($category);
-
-         $entityManager->flush();
-
-         return new Response('Saved a category with the id of '. $category->getId());
-     }
-*/
-     /*public function save() {
-         $categories = ['category4','category2','category3'];
-         $entityManager = $this->getDoctrine()->getManager();
-
-         $article = new Article();
-         $article->setTitle('Article Five');
-         $article->setDescription('This is a short description of article five');
-         $article->setBody('Body of article five');
-         $article->setPicture('https://bobandsuewilliams.com/images/black-square-6.png');
-         $article->setCategories($categories);
-         $article->setDate(date("Y/m/d"));
-         
-
-         $entityManager->persist($article);
-
-         $entityManager->flush();
-
-         return new Response('Saved an article with the id of '. $article->getId());
-     } */
 
      /**
-     * @Route("/article/{id}")
+     * @Route("/article/{id}", name="show")
      */
 
-    public function show($id) {
+    public function showArt($id) {
         $article = $this->getDoctrine()->getRepository
         (Article::class)->find($id);
 
         return $this->render('newsarticles/show.html.twig', array
         ('article' => $article));
+    }
+
+    /**
+     * @Route("/category/{id}", name="categorylist")
+     */
+
+    public function showCat($id) {
+        $category = $this->getDoctrine()->getRepository(Category::class)->find($id);
+        $articles = $this->getDoctrine()->getRepository(Article::class)->findby([],['date' => 'DESC']);
+
+        return $this->render('newsarticles/category.html.twig', 
+        ['category' => $category,
+        'articles' => $articles]);
     }
 }

@@ -1,0 +1,33 @@
+{{ form_start(form) }}
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(form) }}
+    </div>
+
+    <div class="col ml-2">
+        <div class="col mb-2">
+                <h4>{{ form_label(form.title) }}</h4>
+                <div>{{ form_widget(form.title) }}</div>
+        </div>
+        <div class="col mb-2">
+                <h4>{{ form_label(form.description) }}</h4>
+                <div>{{ form_widget(form.description) }}</div>
+        </div>
+        <div class="col mb-2">
+                <h4>{{ form_label(form.body) }}</h4>
+                <div>{{ form_widget(form.body) }}</div>
+        </div>
+        <div class="col mb-2">
+                <h4>{{ form_label(form.picture) }} url</h4>
+                <div>{{ form_widget(form.picture) }}</div>
+        </div>
+        <div class="col mb-2">
+                <h4>{{ form_label(form.categories) }}</h4>
+                <div>{{ form_widget(form.categories) }}</div>
+        </div>
+        <div class="col mb-2">
+                <h4>{{ form_label(form.date) }}</h4>
+                <div>{{ form_widget(form.date) }}</div>
+        </div>
+    </div>
+    <button class="btn ml-2">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
