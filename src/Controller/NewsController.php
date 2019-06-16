@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Form\NewArticleType;
+use App\Repository\ArticleRepository;
 
 class NewsController extends Controller{
     /**
@@ -51,6 +52,7 @@ class NewsController extends Controller{
      */
 
     public function showArt($id) {
+        
         $article = $this->getDoctrine()->getRepository
         (Article::class)->find($id);
 
@@ -62,12 +64,11 @@ class NewsController extends Controller{
      * @Route("/category/{id}", name="categorylist")
      */
 
-    public function showCat($id) {
+    public function showCat($id, ArticleRepository $query, Request $request) {
         $category = $this->getDoctrine()->getRepository(Category::class)->find($id);
-        $articles = $this->getDoctrine()->getRepository(Article::class)->findby([],['date' => 'DESC']);
-
-        return $this->render('newsarticles/category.html.twig', 
-        ['category' => $category,
-        'articles' => $articles]);
+        
+        $data = $query->ReturnData($request);
+        
+            return $this->render('newsarticles/category.html.twig', array('category' => $category, 'data' => $data));
     }
 }

@@ -5,6 +5,9 @@ namespace App\Repository;
 use App\Entity\Article;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Testdata;
 
 /**
  * @method Article|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,9 +17,37 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class ArticleRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+protected $em;
+protected $container;
+
+    public function __construct(RegistryInterface $registry, EntityManagerInterface $entityManager, ContainerInterface $container)
     {
         parent::__construct($registry, Article::class);
+        $this->em = $entityManager;
+        $this->container = $container;
+    }
+
+    public function ReturnData($request){
+        $em = $this->em;
+        $container = $this->container;
+        $query = $em->CreateQuery(
+            'SELECT 
+            a.id,
+            a.title,
+            a.description,
+            a.body,
+            a.picture,
+            a.categories,
+            a.date
+
+             FROM App\Entity\Article a');
+
+        $pagenator = $container->get('knp_paginator');
+        $result = $pagenator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 10));
+        return ($result);
     }
 
     // /**
