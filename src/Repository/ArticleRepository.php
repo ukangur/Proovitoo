@@ -27,27 +27,9 @@ protected $container;
         $this->container = $container;
     }
 
-    public function ReturnData($request){
-        $em = $this->em;
-        $container = $this->container;
-        $query = $em->CreateQuery(
-            'SELECT 
-            a.id,
-            a.title,
-            a.description,
-            a.body,
-            a.picture,
-            a.categories,
-            a.date
-
-             FROM App\Entity\Article a');
-
-        $pagenator = $container->get('knp_paginator');
-        $result = $pagenator->paginate(
-            $query,
-            $request->query->getInt('page', 1),
-            $request->query->getInt('limit', 10));
-        return ($result);
+    public function createFindAllQuery()
+    {
+        return $this->em->getRepository(Article::class)->createQueryBuilder('bp');
     }
 
     // /**

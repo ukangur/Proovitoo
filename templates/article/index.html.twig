@@ -3,7 +3,7 @@
 {% block title %}Article maker{% endblock %}
 
 {% block body %}
-    <h1>Articles</h1>
+    <h1 class="ml-2">Articles</h1>
 
     <table class="table">
         <thead>
@@ -25,8 +25,8 @@
                 <td>{{ article.categories ? article.categories|join(', ') : '' }}</td>
                 <td>{{ article.date }}</td>
                 <td>
-                    <a href="{{ path('article_show', {'id': article.id}) }}">show</a>
-                    <a href="{{ path('article_edit', {'id': article.id}) }}">edit</a>
+                    <a class="btn btn-primary ml-4" href="{{ path('article_show', {'id': article.id}) }}">show</a>
+                    <a class="btn btn-primary ml-4" href="{{ path('article_edit', {'id': article.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -37,5 +37,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('article_new') }}">Create new</a>
+    <a class="btn btn-primary ml-4 mb-4" href="{{ path('article_new') }}">Create new</a>
 {% endblock %}

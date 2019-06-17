@@ -11,6 +11,6 @@
 <div class="mb-4"><a>Categories: {% for category in article.categories %} {{category}} {% endfor %}</a></div>
 <p align="justify">{{ article.body }}</p>
 <hr>
-<button class="mb-4"><a href="#" onclick="history.go(-1)">Go back</a></button>
+<button class="btn btn-primary mb-4" onclick="history.go(-1)">Go back</button>
 </div>
 {% endblock %}

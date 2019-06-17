@@ -5,14 +5,14 @@
 {% for category in categories %}
 {% set counter = 0 %}
 <div align="center" class="col ml-2 mr-2">
-    <h1><a href="/category/{{category.id}}">{{category.title}}</a></h1>
+    <h1 class="mt-4"><a href="/category/{{category.id}}">{{category.title}}</a></h1>
 
     {% if articles %}
     <div align="center" class="container">
         <div align="center" class="row ml-2 mr-2">
                 {% for article in articles %}
                 {% if category.title in article.categories and counter != 3%}
-                    <div align="center" class="card text-dark mb-4">
+                    <div align="center" class="card text-dark mb-4 ml-3">
                             <div class="card-body">
                                     <div><img src={{article.picture}} alt="" height="200" width="300"></div>
                                         <div><a href="/article/{{article.id}}">{{article.title}}</a></div>

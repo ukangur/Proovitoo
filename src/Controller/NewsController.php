@@ -66,8 +66,14 @@ class NewsController extends Controller{
 
     public function showCat($id, ArticleRepository $query, Request $request) {
         $category = $this->getDoctrine()->getRepository(Category::class)->find($id);
-        
-        $data = $query->ReturnData($request);
+
+        $queryBuilder = $this->getDoctrine()->getRepository(Article::class)->createFindAllQuery();
+
+        $data = $this->get('knp_paginator')->paginate(
+            $queryBuilder->getQuery(), /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            $request->query->getInt('limit', 2)/*limit per page*/
+        );
         
             return $this->render('newsarticles/category.html.twig', array('category' => $category, 'data' => $data));
     }
