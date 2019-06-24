@@ -29,12 +29,12 @@ protected $container;
 
     public function createFindAllQuery($category)
     {
-
     return $this->em->getRepository(Article::class)
     ->createQueryBuilder('a')
     ->select('a')
     ->where(':catid MEMBER OF a.categories')
-    ->setParameter('catid', $category);
+    ->setParameter('catid', $category)
+    ->orderBy('a.date', 'DESC');
     }
 
     // /**

@@ -7,7 +7,7 @@
         <img src="{{ article.picture }}" height="500" width="relative">
       
 <h1 class="mb-2 mt-4">{{ article.title }}</h1>
-<div class="mb-2"><a>Published: {{article.date|date("d/m/Y")}}</a></div>
+<div class="mb-2"><a>Published: {{article.date|date("d/m/Y H:i:s")}}</a></div>
 <div class="mb-4"><a>Categories: {{ article.categories|join(', ') }}</a></div>
 <p align="justify">{{ article.body }}</p>
 <hr>
