@@ -3,9 +3,11 @@
 {% block title %}New Category{% endblock %}
 
 {% block body %}
+<div align="center">
     <h1 class="ml-2">Create new Category</h1>
 
     {{ include('category/_form.html.twig') }}
 
-    <a class="btn btn-primary ml-4" href="{{ path('category_index') }}">back to list</a>
+    <a class="btn btn-primary ml-4 mt-2 mb-4" href="{{ path('category_index') }}">back to list</a>
+</div>
 {% endblock %}

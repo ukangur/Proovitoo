@@ -28,8 +28,8 @@
             {% endif %}
         </ul>
         {% if app.user %}
-    <div class="ml-4">
-        <a><font color="white"><b>Welcome back, Admin!</b></font></a>
+    <div>
+        <a><font color="white"><b>Welcome back, {{ app.user.username }}!</b></font></a>
     </div>
     {% endif %}
     </div>

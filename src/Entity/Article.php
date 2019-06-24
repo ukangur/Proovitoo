@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Category;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
@@ -37,12 +38,13 @@ class Article
     private $picture;
 
     /**
-     *  @ORM\Column(type="array")
+     * @ORM\ManyToMany(targetEntity="Category")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      */
     private $categories;
 
     /**
-     *  @ORM\Column(type="text")
+     *  @ORM\Column(type="datetime")
      */
     private $date;
 

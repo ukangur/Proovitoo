@@ -3,9 +3,11 @@
 {% block title %}New Article{% endblock %}
 
 {% block body %}
+<div align="center">
     <h1 class="ml-2">Create new Article</h1>
 
     {{ include('article/_form.html.twig') }}
 
-    <a class="btn btn-primary ml-4" href="{{ path('article_index') }}">back to list</a>
+    <a class="btn btn-primary ml-4 mt-2 mb-4" href="{{ path('article_index') }}">back to list</a>
+</div>
 {% endblock %}

@@ -27,9 +27,14 @@ protected $container;
         $this->container = $container;
     }
 
-    public function createFindAllQuery()
+    public function createFindAllQuery($category)
     {
-        return $this->em->getRepository(Article::class)->createQueryBuilder('bp');
+
+    return $this->em->getRepository(Article::class)
+    ->createQueryBuilder('a')
+    ->select('a')
+    ->where(':catid MEMBER OF a.categories')
+    ->setParameter('catid', $category);
     }
 
     // /**
