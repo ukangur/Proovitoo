@@ -1,0 +1,49 @@
+{% extends 'base.html.twig'%}
+
+{% block title %} New comment {% endblock %}
+
+{% block body %}
+<div align="center">
+  <h1>Comments of {{article.title}}</h1>
+  <a class="btn btn-primary mb-4 mt-4" href="{{ path('show', {'id': article.id}) }}">Go back</a>
+</div>
+<div class="m-4">
+  <div class="mt-4">
+    {% for comment in comments %}
+    <div class="card mt-4">
+      <div class="card-header">By <b>{{comment.author}}</b> on <i>{{comment.date|date("d/m/Y H:i:s")}}</i></div>
+      <div class="card-body">{{comment.body}}</div>
+      <div class="card-footer" align="right">{% if app.user %}<a href="{{ path('delete_comment', {'id': article.id, 'cid': comment.id}) }}" class="btn btn-primary">Delete</a>{% endif %}</div>
+    </div>
+    {% else %}
+    <div align="center">
+    <h3>no comments found</h3>
+    </div>
+    {% endfor %}
+  </div>
+    <hr>
+    <div class="my-custom-class-for-errors">
+      {{ form_errors(form) }}
+    </div>
+    {{ form_start(form) }}
+    
+    <div class="mt-4 mb-4">
+      <h2>Post your comment here</h2>
+    </div>
+    <div class="col mb-2 mt-4">
+      <h4>{{ form_label(form.author) }}</h4>
+      <div>{{ form_widget(form.author) }}</div>
+    </div>
+    <div class="col mb-2">
+      <h4>Comment</h4>
+      <div>{{ form_widget(form.body) }}</div>
+    {{ form_end(form) }}
+  
+</div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+<script src="/js/CommentDeleter.js"></script>
+{% endblock %}

@@ -1,3 +1,27 @@
-index:
+home:
     path: /
     controller: App\Controller\NewsController::index
+
+show:
+    path: /article/{id}
+    controller: App\Controller\NewsController::showArt
+
+comments:
+    path: /article/{id}/comments
+    controller: App\Controller\NewsController::commentArt
+
+delete_comment:
+    path: /article/{id}/comments/{cid}/delete
+    controller: App\Controller\NewsController::deleteCommentArtF
+
+categorylist:
+    path: /category/{id}
+    controller: App\Controller\NewsController::showCat
+
+login:
+    path: /login
+    controller: App\Controller\SecurityController::login
+
+logout:
+    path: /logout
+    controller: App\Controller\SecurityController::logout

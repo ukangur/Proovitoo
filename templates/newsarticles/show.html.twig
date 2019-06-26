@@ -11,6 +11,7 @@
 <div class="mb-4"><a>Categories: {{ article.categories|join(', ') }}</a></div>
 <p align="justify">{{ article.body }}</p>
 <hr>
-<button class="btn btn-primary mb-4" onclick="history.go(-1)">Go back</button>
+<a class="btn btn-primary mb-4" href="{{ path('home') }}">Go back</a>
+<a class="btn btn-primary mb-4" href="{{ path('comments', {'id': article.id}) }}">Comments</a>
 </div>
 {% endblock %}

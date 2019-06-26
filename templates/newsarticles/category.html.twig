@@ -11,7 +11,7 @@
                     <div align="center" class="card text-dark mb-4 ml-3">
                             <div class="card-body">
                                     <div><img src={{d.picture}} alt="" height="200" width="relative"></div>
-                                        <div><a href="/article/{{d.id}}">{{d.title}}</a></div>
+                                        <div><a href="{{ path('show', {'id': d.id}) }}">{{d.title}}</a></div>
                                         <div><a>{{d.description}}</a></div>
                                     </div>
                                 </div>

@@ -16,18 +16,5 @@ class AppFixtures extends Fixture
     }
 
     public function load(ObjectManager $manager)
-    {
-        $user = new User();
-
-        $user->setUsername('admin');
-
-        $user->setPassword(
-            $this->encoder->encodePassword($user, 'admin')
-        );
-        
-        $user->setEmail('uku.kangur@gmail.com');
-        
-        $manager->persist($user);
-        $manager->flush();
-    }
+    {}
 }

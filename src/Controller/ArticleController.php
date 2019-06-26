@@ -32,6 +32,7 @@ class ArticleController extends AbstractController
     public function new(Request $request): Response
     {
         $article = new Article();
+        $article->setDate(new \DateTime('now'));
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 

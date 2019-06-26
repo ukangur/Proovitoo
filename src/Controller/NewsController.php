@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Category;
+use App\Entity\Comment;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,13 +19,8 @@ use App\Form\NewArticleType;
 use App\Repository\ArticleRepository;
 
 class NewsController extends Controller{
-    /**
-     * @Route("/", name="home")
-     * @Method({{"GET"}})
-     */
     
     public function index(){
-        //return new Response('<html><body>Hello</body></html>');
     
         $articles = $this->getDoctrine()->getRepository(Article::class)->findby([],['date' => 'DESC']);
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
@@ -32,24 +28,6 @@ class NewsController extends Controller{
 
     return $this->render('newsarticles/index.html.twig', array('articles' => $articles,'categories' => $categories));
     }
-
-     /**
-      * @Route("/article/new", name="newarticle")
-      */
-     public function new(Request $request) {
-
-        $article = new Article();
-
-        $form = $this->createForm(NewArticleType::class, $article);
-     
-
-        return $this->render('newsarticles/new.html.twig', array(
-            'formart' => $form->createView()));
-     }
-
-     /**
-     * @Route("/article/{id}", name="show")
-     */
 
     public function showArt($id) {
         
@@ -59,10 +37,6 @@ class NewsController extends Controller{
         return $this->render('newsarticles/show.html.twig', array
         ('article' => $article));
     }
-
-    /**
-     * @Route("/category/{id}", name="categorylist")
-     */
 
     public function showCat($id, ArticleRepository $query, Request $request) {
         $category = $this->getDoctrine()->getRepository(Category::class)->find($id);
@@ -77,4 +51,46 @@ class NewsController extends Controller{
         
             return $this->render('newsarticles/category.html.twig', array('category' => $category, 'data' => $data));
     }
+
+    public function commentArt(Request $request, $id) {
+        $article = $this->getDoctrine()->getRepository(Article::class)->find($id);
+        $comments = $this->getDoctrine()->getRepository(Comment::class)->findby(array('Article' => $article));
+        $comment = new Comment();
+        $comment->setArticle($article);
+        $comment->setDate(new \DateTime('now'));
+        $form = $this->createFormBuilder($comment)
+          ->add('author', TextType::class, array('attr' => array('class' => 'form-control')))
+          ->add('body', TextareaType::class, array(
+            'required' => true,
+            'attr' => array('class' => 'form-control')
+          ))
+          ->add('save', SubmitType::class, array(
+            'label' => 'Post comment',
+            'attr' => array('class' => 'btn btn-primary mt-3')
+          ))
+          ->getForm();
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+          $comment = $form->getData();
+          $entityManager = $this->getDoctrine()->getManager();
+          $entityManager->persist($comment);
+          $entityManager->flush();
+          return $this->redirectToRoute('comments', array('id' => $id));
+        }
+        return $this->render('newsarticles/comments.html.twig', array(
+          'form' => $form->createView(), 'article' => $article, 'comments' => $comments
+        ));
+      }
+
+    
+    public function deleteCommentArt(Request $request, $id, $cid): Response
+    {
+        $comment = $this->getDoctrine()->getRepository(Comment::class)->find($cid);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($comment);
+        $entityManager->flush();
+        
+        return $this->redirectToRoute('comments', array('id' => $id));
+    }
+  
 }
