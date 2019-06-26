@@ -8,13 +8,18 @@
     <div align="center" class="container">
         <div align="center" class="row ml-2 mr-2">
                 {% for d in data %}
-                    <div align="center" class="card text-dark mb-4 ml-3">
-                            <div class="card-body">
-                                    <div><img src={{d.picture}} alt="" height="200" width="relative"></div>
-                                        <div><a href="{{ path('show', {'id': d.id}) }}">{{d.title}}</a></div>
-                                        <div><a>{{d.description}}</a></div>
-                                    </div>
+                <a href="{{ path('show', {'id': d.id}) }}">
+                        <div align="center" class="card text-dark mb-4 ml-3">
+                                <div class="card-body">
+                                        {% if d.picture %}<div><img src={{d.picture}} alt="" height="200" width="relative"></div>
+                                        {% else %}
+                                        <div><img height="200"></div>
+                                        {% endif %}
+                                            <div><h5>{{d.title}}</h5></div>
+                                            <div>{{d.description}}</div>
                                 </div>
+                        </div>
+                    </a>
             {% endfor %}
 
         </div>

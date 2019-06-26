@@ -12,13 +12,18 @@
         <div align="center" class="row ml-2 mr-2">
                 {% for article in articles %}
                 {% if category in article.categories and counter != 3%}
+                <a href="{{ path('show', {'id': article.id}) }}">
                     <div align="center" class="card text-dark mb-4 ml-3">
                             <div class="card-body">
-                                    <div><img src={{article.picture}} alt="" height="200" width="relative"></div>
-                                        <div><a href="{{ path('show', {'id': article.id}) }}">{{article.title}}</a></div>
-                                        <div><a>{{article.description}}</a></div>
-                                    </div>
-                                </div>
+                                    {% if article.picture %}<div><img src={{article.picture}} alt="" height="200" width="relative"></div>
+                                    {% else %}
+                                    <div><img height="200"></div>
+                                    {% endif %}
+                                        <div><h5>{{article.title}}</h5></div>
+                                        <div>{{article.description}}</div>
+                            </div>
+                    </div>
+                </a>
                     {% set counter = counter + 1 %}
               {% endif %}
             {% endfor %}
